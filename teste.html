@@ -118,39 +118,56 @@
     return 'other';
 }
 
-// Função para redirecionar para o WhatsApp
+// Função para redirecionar para o WhatsApp apenas quando o botão está visível
 function redirectToWhatsApp() {
-    const whatsapp = getCookie('whatsapp');
-    if (!whatsapp) {
-        const newWhatsApp = Math.floor(Math.random() * 2) + 1;
-        setCookie('whatsapp', newWhatsApp, 365);
+    const button = document.getElementById('whatsappButton');
+    
+    // Verifica se o botão do WhatsApp está visível na página
+    if (button.style.display === 'inline-block') {
+        const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
+        const currentHour = now.hour;
+        
+        // Verifica se o horário atual está dentro do intervalo ativo do WhatsApp
+        if (currentHour >= buttonSettings.whatsapp.startTime && currentHour < buttonSettings.whatsapp.endTime) {
+            const whatsapp = getCookie('whatsapp');
+            if (!whatsapp) {
+                const newWhatsApp = Math.floor(Math.random() * 2) + 1;
+                setCookie('whatsapp', newWhatsApp, 365);
+            }
+            const source = determineSource();
+            const link = getWhatsAppLink(source, whatsapp || newWhatsApp);
+            window.location.href = link; // Redireciona diretamente para o WhatsApp
+        }
     }
-    const source = determineSource();
-    const link = getWhatsAppLink(source, whatsapp || newWhatsApp);
-    window.location.href = link; // Redireciona diretamente para o WhatsApp
 }
 
 // Função para aplicar as configurações do botão do WhatsApp
 function applyWhatsAppSettings() {
+    const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
+    const currentHour = now.hour;
     const settings = buttonSettings.whatsapp;
     const button = document.getElementById('whatsappButton');
+    const isWithinActiveHours = currentHour >= settings.startTime && currentHour < settings.endTime;
+    const isVisible = currentHour >= settings.visibilityStart && currentHour < settings.visibilityEnd;
 
-    if (settings.visibility) {
+    if (settings.visibility && isVisible) {
         button.style.display = 'inline-block';
         button.style.backgroundColor = settings.color;
         button.style.color = settings.textColor;
         button.style.marginTop = '50px'; // Adicionando margem superior
         button.innerHTML = settings.text;
-        if (settings.pulse) {
+        if (settings.pulse && currentHour >= settings.pulseStart && currentHour < settings.pulseEnd) {
             button.classList.add('pulse');
         } else {
             button.classList.remove('pulse');
         }
+        
+        // Se o botão estiver visível, chama o redirecionamento ao carregar a página
+        redirectToWhatsApp();
     } else {
         button.style.display = 'none';
     }
 }
-
         function applyTelegramSettings() {
             const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
             const currentHour = now.hour;
