@@ -118,7 +118,7 @@
     return 'other';
 }
 
-// Função para redirecionar para o WhatsApp apenas quando o botão está visível
+// Função para redirecionar para o WhatsApp
 function redirectToWhatsApp() {
     const button = document.getElementById('whatsappButton');
     
@@ -126,9 +126,10 @@ function redirectToWhatsApp() {
     if (button.style.display === 'inline-block') {
         const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
         const currentHour = now.hour;
-        
+        const settings = buttonSettings.whatsapp;
+
         // Verifica se o horário atual está dentro do intervalo ativo do WhatsApp
-        if (currentHour >= buttonSettings.whatsapp.startTime && currentHour < buttonSettings.whatsapp.endTime) {
+        if (currentHour >= settings.startTime && currentHour < settings.endTime) {
             const whatsapp = getCookie('whatsapp');
             if (!whatsapp) {
                 const newWhatsApp = Math.floor(Math.random() * 2) + 1;
@@ -162,12 +163,13 @@ function applyWhatsAppSettings() {
             button.classList.remove('pulse');
         }
         
-        // Se o botão estiver visível, chama o redirecionamento ao carregar a página
+        // Chama o redirecionamento imediatamente se o botão estiver visível
         redirectToWhatsApp();
     } else {
         button.style.display = 'none';
     }
 }
+
         function applyTelegramSettings() {
             const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
             const currentHour = now.hour;
