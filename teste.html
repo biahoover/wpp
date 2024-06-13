@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+ 
     <!-- Luxon -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.0/luxon.min.js"></script>
-    
+
+    <!-- Facebook Pixel Code -->
     <script>
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -18,81 +20,21 @@
     </script>
     <!-- End Facebook Pixel Code -->
 
+    <!-- Redirecionamento rápido para WhatsApp -->
     <script>
-        // Defina o fuso horário desejado
-        const timeZone = 'America/Sao_Paulo';
-
-         const buttonSettings = {};
-
-        // Função para gerar um parâmetro de consulta único
-        function generateUniqueQueryParam() {
-            return `?timestamp=${new Date().getTime()}`;
-        }
-
-        // Função para obter configurações de botão rapidamente
-         // Consulta o arquivo JSON para carregar as configurações dos botões
-        fetch('https://biahoover.github.io/whatsapp/buttonSettings.json' + generateUniqueQueryParam())
+        const buttonSettings = {};
+        fetch('https://biahoover.github.io/whatsapp/buttonSettings.json')
             .then(response => response.json())
             .then(data => {
                 buttonSettings.whatsapp = data.whatsapp;
                 buttonSettings.telegram = data.telegram;
                 buttonSettings.instagram = data.instagram;
 
-                // Aplicar as configurações dos botões
-                applyButtonSettings();
+                // Chama a função para verificar o redirecionamento
+                checkAndRedirect();
             })
             .catch(error => console.error('Erro ao carregar as configurações dos botões:', error));
 
-
-        // Função para determinar a visibilidade do botão do WhatsApp
-        function isWhatsAppButtonVisible(settings) {
-            const now = luxon.DateTime.now().setZone(timeZone);
-            const currentHour = now.hour;
-            return currentHour >= settings.visibilityStart && currentHour < settings.visibilityEnd;
-        }
-
-        // Função para redirecionar para o WhatsApp
-        function redirectToWhatsApp(settings) {
-            const now = luxon.DateTime.now().setZone(timeZone);
-            const currentHour = now.hour;
-            if (currentHour >= settings.startTime && currentHour < settings.endTime) {
-                const whatsapp = getCookie('whatsapp');
-                if (!whatsapp) {
-                    const newWhatsApp = Math.floor(Math.random() * 2) + 1;
-                    setCookie('whatsapp', newWhatsApp, 365);
-                }
-                const source = determineSource();
-                const link = getWhatsAppLink(source, whatsapp || newWhatsApp);
-                window.location.href = link;
-            }
-        }
-
-        // Função para definir um cookie
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/;domain=.biahoover.github.io";
-        }
-
-        // Função para obter um cookie
-        function getCookie(name) {
-            const decodedCookie = decodeURIComponent(document.cookie);
-            const ca = decodedCookie.split(';');
-            const cookieName = name + "=";
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(cookieName) == 0) {
-                    return c.substring(cookieName.length, c.length);
-                }
-            }
-            return "";
-        }
-
-        // Função para determinar a fonte
         function determineSource() {
             const referrer = document.referrer.toLowerCase();
             const urlParams = new URLSearchParams(window.location.search);
@@ -106,6 +48,34 @@
             return 'other';
         }
 
+        function checkAndRedirect() {
+            const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
+            const currentHour = now.hour;
+            const settings = buttonSettings.whatsapp;
+            const isVisible = currentHour >= settings.visibilityStart && currentHour < settings.visibilityEnd;
+
+            if (settings.visibility && isVisible) {
+                redirectToWhatsApp();
+            }
+        }
+
+        function redirectToWhatsApp() {
+            const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
+            const currentHour = now.hour;
+
+            if (currentHour >= buttonSettings.whatsapp.startTime && currentHour < buttonSettings.whatsapp.endTime) {
+                const whatsapp = getCookie('whatsapp');
+                if (!whatsapp) {
+                    const newWhatsApp = Math.floor(Math.random() * 2) + 1;
+                    setCookie('whatsapp', newWhatsApp, 365);
+                }
+                const source = determineSource();
+                const link = getWhatsAppLink(source, whatsapp || newWhatsApp);
+                window.location.href = link;
+            }
+        }
+
+       
         // Função para obter o link do WhatsApp
            function getWhatsAppLink(source, whatsapp) {
         const links = {
@@ -132,19 +102,31 @@
         return links[source][whatsapp - 1];
     }
 
-        // Função principal para checar visibilidade e redirecionar se necessário
-        async function checkVisibilityAndRedirect() {
-            const settings = await getButtonSettings();
-            if (settings && isWhatsAppButtonVisible(settings.whatsapp)) {
-                redirectToWhatsApp(settings.whatsapp);
-            }
+
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/;domain=.biahoover.github.io";
         }
 
-        // Chama a função principal o mais cedo possível
-        checkVisibilityAndRedirect();
+        function getCookie(name) {
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            const cookieName = name + "=";
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cookieName) == 0) {
+                    return c.substring(cookieName.length, c.length);
+                }
+            }
+            return "";
+        }
     </script>
-
-<meta charset="UTF-8">
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bia Hoover</title>
     <link rel="icon" href="https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png" type="image/png">
@@ -155,6 +137,7 @@
     <meta property="og:image" content="https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png">
     <meta property="og:url" content="biahoover.github.io/whatsapp">
     <meta property="og:type" content="website">
+
     <style>
         body {
             background-image: url('https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png');
@@ -198,7 +181,6 @@
             }
         }
     </style>
-    
 </head>
 <body>
     <h2><span style="color:white;"><center style="background-color:none;">Vem me conhecer melhor!</center></span></h2>
@@ -210,35 +192,30 @@
     <button id="instagramButton" class="button" onclick="redirectToInstagram()"></button>
 
     <script>
-  // Função para aplicar as configurações do botão do WhatsApp
-function applyWhatsAppSettings() {
-    const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
-    const currentHour = now.hour;
-    const settings = buttonSettings.whatsapp;
-    const button = document.getElementById('whatsappButton');
-    const isWithinActiveHours = currentHour >= settings.startTime && currentHour < settings.endTime;
-    const isVisible = currentHour >= settings.visibilityStart && currentHour < settings.visibilityEnd;
+        function applyWhatsAppSettings() {
+            const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
+            const currentHour = now.hour;
+            const settings = buttonSettings.whatsapp;
+            const button = document.getElementById('whatsappButton');
+            const isVisible = currentHour >= settings.visibilityStart && currentHour < settings.visibilityEnd;
 
-    if (settings.visibility && isVisible) {
-        button.style.display = 'inline-block';
-        button.style.backgroundColor = settings.color;
-        button.style.color = settings.textColor;
-        button.style.marginTop = '50px'; // Adicionando margem superior
-        button.innerHTML = settings.text;
-        if (settings.pulse && currentHour >= settings.pulseStart && currentHour < settings.pulseEnd) {
-            button.classList.add('pulse');
-        } else {
-            button.classList.remove('pulse');
+            if (settings.visibility && isVisible) {
+                button.style.display = 'inline-block';
+                button.style.backgroundColor = settings.color;
+                button.style.color = settings.textColor;
+                button.style.marginTop = '50px'; // Adicionando margem superior
+                button.innerHTML = settings.text;
+                if (settings.pulse && currentHour >= settings.pulseStart && currentHour < settings.pulseEnd) {
+                    button.classList.add('pulse');
+                } else {
+                    button.classList.remove('pulse');
+                }
+            } else {
+                button.style.display = 'none';
+            }
         }
-        
-        // Chama o redirecionamento imediatamente se o botão estiver visível
-        redirectToWhatsApp();
-    } else {
-        button.style.display = 'none';
-    }
-}
 
-           function applyTelegramSettings() {
+        function applyTelegramSettings() {
             const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
             const currentHour = now.hour;
             const settings = buttonSettings.telegram;
@@ -316,8 +293,8 @@ function applyWhatsAppSettings() {
             }, 1000);
         }
 
-      
-            function redirectToTelegram() {
+
+        function redirectToTelegram() {
         const source = determineSource();
         const link = getTelegramLink(source);
         window.location.href = link;
@@ -340,11 +317,8 @@ function applyWhatsAppSettings() {
         return links[source];
     }
 
-   
 
-  
-
-    applyButtonSettings();
+            applyButtonSettings();
 
           function applyButtonSettings() {
         applyWhatsAppSettings();
@@ -354,11 +328,19 @@ function applyWhatsAppSettings() {
 
         // Carregar configurações ao carregar a página
         document.addEventListener('DOMContentLoaded', applyButtonSettings);
+        
+      
     </script>
-    
-
-    
 </body>
 </html>
+
+
+
+
+
+
+
+
+
 
 
