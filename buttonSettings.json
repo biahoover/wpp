@@ -8,7 +8,7 @@
         "pulse": true,
         "pulseStart": 8,
         "pulseEnd": 24,
-        "visibility": true,
+        "visibility": false,
         "visibilityStart": 8,
         "visibilityEnd": 24
     },
@@ -23,7 +23,7 @@
         "pulseEnd": 24,
         "visibility": true,
         "visibilityStart": 0,
-        "visibilityEnd": 8
+        "visibilityEnd": 24
     },
     "instagram": {
         "text": "Visite meu Instagram",
