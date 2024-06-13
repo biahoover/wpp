@@ -47,13 +47,17 @@
 
         // Função para determinar a origem do usuário
         function determineSource() {
-            const referrer = document.referrer.toLowerCase();
-            if (referrer.includes('facebook.com')) return 'facebook';
-            if (referrer.includes('instagram.com')) return 'instagram';
-            if (referrer.includes('telegram.org')) return 'telegram';
-            return 'other';
-        }
+    const referrer = document.referrer.toLowerCase();
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmSource = urlParams.get('src');
 
+    if (utmSource === 'telegram') return 'telegram';
+    if (referrer.includes('facebook.com')) return 'facebook';
+    if (referrer.includes('instagram.com')) return 'instagram';
+    if (referrer.includes('telegram.org')) return 'telegram';
+    
+    return 'other';
+}
            function getWhatsAppLink(source, whatsapp) {
         const links = {
             'facebook': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
