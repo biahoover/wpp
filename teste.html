@@ -118,46 +118,33 @@
     return 'other';
 }
 
-        // Função para redirecionar para o WhatsApp
+// Função para redirecionar para o WhatsApp
 function redirectToWhatsApp() {
-    const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
-    const currentHour = now.hour;
-    
-    // Verifica se o horário atual está dentro do intervalo ativo do WhatsApp
-    if (currentHour >= buttonSettings.whatsapp.startTime && currentHour < buttonSettings.whatsapp.endTime) {
-        const whatsapp = getCookie('whatsapp');
-        if (!whatsapp) {
-            const newWhatsApp = Math.floor(Math.random() * 2) + 1;
-            setCookie('whatsapp', newWhatsApp, 365);
-        }
-        const source = determineSource();
-        const link = getWhatsAppLink(source, whatsapp || newWhatsApp);
-        window.location.href = link; // Redireciona diretamente para o WhatsApp
+    const whatsapp = getCookie('whatsapp');
+    if (!whatsapp) {
+        const newWhatsApp = Math.floor(Math.random() * 2) + 1;
+        setCookie('whatsapp', newWhatsApp, 365);
     }
+    const source = determineSource();
+    const link = getWhatsAppLink(source, whatsapp || newWhatsApp);
+    window.location.href = link; // Redireciona diretamente para o WhatsApp
 }
 
 // Função para aplicar as configurações do botão do WhatsApp
 function applyWhatsAppSettings() {
-    const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
-    const currentHour = now.hour;
     const settings = buttonSettings.whatsapp;
     const button = document.getElementById('whatsappButton');
-    const isWithinActiveHours = currentHour >= settings.startTime && currentHour < settings.endTime;
-    const isVisible = currentHour >= settings.visibilityStart && currentHour < settings.visibilityEnd;
 
-    if (settings.visibility && isVisible) {
+    if (settings.visibility) {
         button.style.display = 'inline-block';
         button.style.backgroundColor = settings.color;
         button.style.color = settings.textColor;
         button.style.marginTop = '50px'; // Adicionando margem superior
         button.innerHTML = settings.text;
-        if (settings.pulse && currentHour >= settings.pulseStart && currentHour < settings.pulseEnd) {
+        if (settings.pulse) {
             button.classList.add('pulse');
         } else {
             button.classList.remove('pulse');
-        }
-        if (isWithinActiveHours) {
-            redirectToWhatsApp(); // Chama automaticamente o redirecionamento se estiver dentro do horário ativo
         }
     } else {
         button.style.display = 'none';
