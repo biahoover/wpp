@@ -62,19 +62,25 @@
               }
           }
 
-         function redirectToInstagram() {
+      function redirectToInstagram() {
+    const instagramUsername = 'biahoover'; // Substitua pelo nome de usuário desejado
+
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     const isAndroid = /Android/.test(navigator.userAgent);
 
     if (isIOS) {
-        window.location.href = 'instagram://user?username=biahoover';
+        window.location.href = `instagram://user?username=${instagramUsername}`;
+        setTimeout(function() {
+            window.location.href = `https://www.instagram.com/${instagramUsername}/`;
+        }, 25);
     } else if (isAndroid) {
-        window.location.href = 'intent://instagram.com/_u/biahoover/#Intent;package=com.instagram.android;scheme=https;end';
+        window.location.href = `intent://instagram.com/_u/${instagramUsername}/#Intent;package=com.instagram.android;scheme=https;end`;
     } else {
         // Caso não seja Android ou iOS, redirecionar para o Instagram via web
-        window.location.href = 'https://www.instagram.com/biahoover/';
+        window.location.href = `https://www.instagram.com/${instagramUsername}/`;
     }
 }
+
 
         // Função para definir um cookie
         function setCookie(name, value, days) {
