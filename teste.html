@@ -16,23 +16,9 @@
     </script>
     <!-- End Facebook Pixel Code -->
     <script>
-        // Função para redirecionar para o WhatsApp
-        function redirectToWhatsApp() {
-            const whatsapp = getCookie('whatsapp');
-            let newWhatsApp;
-            if (!whatsapp) {
-                newWhatsApp = Math.floor(Math.random() * 2) + 1;
-                setCookie('whatsapp', newWhatsApp, 365);
-            } else {
-                newWhatsApp = whatsapp;
-            }
-            const source = determineSource();
-            const link = getWhatsAppLink(source, newWhatsApp);
-            window.location.href = link;
-        }
 
-        // Função para determinar a origem do usuário
-        function determineSource() {
+    // Função para determinar a origem do usuário
+    function determineSource() {
     const referrer = document.referrer.toLowerCase();
     const urlParams = new URLSearchParams(window.location.search);
     const utmSource = urlParams.get('src');
@@ -44,6 +30,33 @@
     
     return 'other';
 }
+
+              // Função para definir um cookie
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/;domain=.biahoover.github.io";
+        }
+
+        // Função para obter um cookie
+        function getCookie(name) {
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            const cookieName = name + "=";
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(cookieName) == 0) {
+                    return c.substring(cookieName.length, c.length);
+                }
+            }
+            return "";
+        }
+   
+
            function getWhatsAppLink(source, whatsapp) {
         const links = {
             'facebook': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
@@ -68,29 +81,19 @@
         };
         return links[source][whatsapp - 1];
     }
-        // Função para definir um cookie
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/;domain=.biahoover.github.io";
-        }
-
-        // Função para obter um cookie
-        function getCookie(name) {
-            const decodedCookie = decodeURIComponent(document.cookie);
-            const ca = decodedCookie.split(';');
-            const cookieName = name + "=";
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(cookieName) == 0) {
-                    return c.substring(cookieName.length, c.length);
-                }
+     // Função para redirecionar para o WhatsApp
+        function redirectToWhatsApp() {
+            const whatsapp = getCookie('whatsapp');
+            let newWhatsApp;
+            if (!whatsapp) {
+                newWhatsApp = Math.floor(Math.random() * 2) + 1;
+                setCookie('whatsapp', newWhatsApp, 365);
+            } else {
+                newWhatsApp = whatsapp;
             }
-            return "";
+            const source = determineSource();
+            const link = getWhatsAppLink(source, newWhatsApp);
+            window.location.href = link;
         }
 
         // Executar o redirecionamento ao carregar a página
