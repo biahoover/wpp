@@ -1,62 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bia Hoover</title>
-    <link rel="icon" href="https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png" type="image/png">
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Bia Hoover">
-    <meta property="og:description" content="Contato Whatsapp">
-    <meta property="og:image" content="https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png">
-    <meta property="og:url" content="biahoover.github.io/whatsapp">
-    <meta property="og:type" content="website">
-
-    <style>
-        body {
-            background-image: url('https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png');
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .button {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            width: 270px;
-            height: auto;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        .pulse {
-            animation: pulse 1s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from {
-                transform: scale(1);
-            }
-            to {
-                transform: scale(1.05);
-            }
-        }
-    </style>
-
+    
     <!-- Luxon -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.0/luxon.min.js"></script>
 
@@ -74,18 +19,9 @@
       fbq('track', 'PageView_SiteWhatsapp');
     </script>
     <!-- End Facebook Pixel Code -->
-</head>
-<body>
-    <h2><span style="color:white;"><center style="background-color:none;">Vem me conhecer melhor!</center></span></h2>
-    <span style="color:white;"><center style="background-color:none;">Clique no botão abaixo! 👇🏻</center></span>
-
-    <!-- Botões -->
-    <button id="whatsappButton" class="button" onclick="redirectToWhatsApp()"></button>
-    <button id="telegramButton" class="button" onclick="redirectToTelegram()"></button>
-    <button id="instagramButton" class="button" onclick="redirectToInstagram()"></button>
 
     <script>
-        const buttonSettings = {};
+  const buttonSettings = {};
 
         // Função para gerar um parâmetro de consulta único
         function generateUniqueQueryParam() {
@@ -142,6 +78,125 @@ function redirectToWhatsApp() {
     }
 }
 
+  function getWhatsAppLink(source, whatsapp) {
+        const links = {
+            'facebook': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                         'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
+                       //  'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                       //  'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
+            
+            'instagram': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia,%20vim%20do%20Instragram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                          'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
+                        //  'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                        //  'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
+            
+            'telegram': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                         'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'], 
+                       //  'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                       //  'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
+            
+            'other': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                      'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'] 
+                      //'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                      //'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶']
+        };
+        return links[source][whatsapp - 1];
+    }
+          function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/;domain=.biahoover.github.io";
+    }
+
+    function getCookie(name) {
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        const cookieName = name + "=";
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(cookieName) == 0) {
+                return c.substring(cookieName.length, c.length);
+            }
+        }
+        return "";
+    }
+
+
+
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bia Hoover</title>
+    <link rel="icon" href="https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png" type="image/png">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Bia Hoover">
+    <meta property="og:description" content="Contato Whatsapp">
+    <meta property="og:image" content="https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png">
+    <meta property="og:url" content="biahoover.github.io/whatsapp">
+    <meta property="og:type" content="website">
+
+    <style>
+        body {
+            background-image: url('https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            width: 270px;
+            height: auto;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .pulse {
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <h2><span style="color:white;"><center style="background-color:none;">Vem me conhecer melhor!</center></span></h2>
+    <span style="color:white;"><center style="background-color:none;">Clique no botão abaixo! 👇🏻</center></span>
+
+    <!-- Botões -->
+    <button id="whatsappButton" class="button" onclick="redirectToWhatsApp()"></button>
+    <button id="telegramButton" class="button" onclick="redirectToTelegram()"></button>
+    <button id="instagramButton" class="button" onclick="redirectToInstagram()"></button>
+
+    <script>
+      
 // Função para aplicar as configurações do botão do WhatsApp
 function applyWhatsAppSettings() {
     const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
@@ -261,31 +316,7 @@ function applyWhatsAppSettings() {
         window.location.href = link;
     }
 
-    function getWhatsAppLink(source, whatsapp) {
-        const links = {
-            'facebook': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
-                         'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
-                       //  'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
-                       //  'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
-            
-            'instagram': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia,%20vim%20do%20Instragram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
-                          'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
-                        //  'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
-                        //  'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
-            
-            'telegram': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
-                         'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'], 
-                       //  'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
-                       //  'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
-            
-            'other': ['https://api.whatsapp.com/send?phone=5519996292460&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
-                      'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'] 
-                      //'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
-                      //'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶']
-        };
-        return links[source][whatsapp - 1];
-    }
-
+  
     function getTelegramLink(source) {
         const links = {
             'facebook': 'https://t.me/+cfg0vSLEW-43OGFh',
@@ -296,29 +327,7 @@ function applyWhatsAppSettings() {
         return links[source];
     }
 
-    function setCookie(name, value, days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        const expires = "expires=" + date.toUTCString();
-        document.cookie = name + "=" + value + ";" + expires + ";path=/;domain=.biahoover.github.io";
-    }
-
-    function getCookie(name) {
-        const decodedCookie = decodeURIComponent(document.cookie);
-        const ca = decodedCookie.split(';');
-        const cookieName = name + "=";
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(cookieName) == 0) {
-                return c.substring(cookieName.length, c.length);
-            }
-        }
-        return "";
-    }
-
+  
     function applyButtonSettings() {
         applyWhatsAppSettings();
         applyTelegramSettings();
