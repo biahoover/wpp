@@ -52,7 +52,7 @@
             const telegramRedirected = getCookie('telegramRedirected');
             if (telegramRedirected === 'true') {
                 // Já redirecionou para o Telegram antes, agora redireciona para o Instagram
-                window.location.href = 'https://www.instagram.com/biahoover/';
+                  redirectToInstagram();
             } else {
                 // Primeiro redirecionamento para o Telegram
                   setCookie('telegramRedirected', 'true', 1/24);
@@ -61,6 +61,20 @@
                   window.location.href = link;
               }
           }
+
+         function redirectToInstagram() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isAndroid = /Android/.test(navigator.userAgent);
+
+    if (isIOS) {
+        window.location.href = 'instagram://user?username=biahoover';
+    } else if (isAndroid) {
+        window.location.href = 'intent://instagram.com/_u/biahoover/#Intent;package=com.instagram.android;scheme=https;end';
+    } else {
+        // Caso não seja Android ou iOS, redirecionar para o Instagram via web
+        window.location.href = 'https://www.instagram.com/biahoover/';
+    }
+}
 
         // Função para definir um cookie
         function setCookie(name, value, days) {
