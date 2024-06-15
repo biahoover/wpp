@@ -37,7 +37,7 @@
             const whatsapp = getCookie('whatsapp');
             let newWhatsApp;
             if (!whatsapp) {
-                newWhatsApp = Math.floor(Math.random() * 2) + 1;
+                newWhatsApp = Math.floor(Math.random() * 4) + 1;
                 setCookie('whatsapp', newWhatsApp, 365);
             } else {
                 newWhatsApp = whatsapp;
