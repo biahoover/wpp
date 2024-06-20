@@ -39,7 +39,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const whatsapp = getCookie('whatsapp');
             let newWhatsApp;
             if (!whatsapp) {
-                newWhatsApp = Math.floor(Math.random() * 3) + 1;
+                newWhatsApp = Math.floor(Math.random() * 4) + 1;
                 setCookie('whatsapp', newWhatsApp, 365);
             } else {
                 newWhatsApp = whatsapp;
@@ -112,24 +112,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         // Função para obter o link do WhatsApp com base na fonte e número escolhido
     function getWhatsAppLink(source, whatsapp) {
         const links = {
-            'facebook': ['https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶',
+            'facebook': ['https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                         'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶',
                          'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
                          'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia,%20vim%20do%20Facebook...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
             
-            'instagram': ['https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶',
+            'instagram': ['https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Instragram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                          'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶',
                           'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
                           'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia,%20vim%20do%20Instagram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
             
             'telegram': ['https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                         'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
                          'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
                          'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia,%20vim%20do%20Telegram...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶'],
             
             'other': ['https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
+                      'https://api.whatsapp.com/send?phone=5519997065737&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
                       'https://api.whatsapp.com/send?phone=5519999631189&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶', 
                       'https://api.whatsapp.com/send?phone=5519998216043&text=Oii%20Bia...%20Quero%20saber%20sobre%20seus%20conteúdos%20🌶']
         };
-        return links[source][whatsapp - 1];
-    }
 
         // Função para obter o link do Telegram com base na fonte de tráfego
         function getTelegramLink(source) {
