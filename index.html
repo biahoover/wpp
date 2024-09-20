@@ -36,14 +36,14 @@
             const telegramRedirected = getCookie('telegramRedirected');
             if (telegramRedirected === 'true') {
                 // Já redirecionou para o Telegram antes, agora redireciona para o Instagram
-               alert("Tente novamente mais tarde!");
+               alert("WHATSAPP OFFILINE \nTente novamente mais tarde!");
                   redirectToInstagram();
             } else {
                 // Primeiro redirecionamento para o Telegram
                   setCookie('telegramRedirected', 'true', 1/24);
                   const source = determineSource();
                   const link = getTelegramLink(source);
-               alert("Tente novamente mais tarde!");
+              alert("WHATSAPP OFFILINE \nTente novamente mais tarde!");
                   window.location.href = link;
               }
           }
