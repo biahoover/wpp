@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando...</title>
+
+    <script>
+        function redirectToInstagram() {
+            const username = "aninhalutzz"; // Substitua pelo seu usuário do Instagram
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            const isAndroid = /Android/.test(navigator.userAgent);
+
+            if (isIOS) {
+                window.location.href = `instagram://user?username=${username}`;
+                setTimeout(() => {
+                    window.location.href = `https://www.instagram.com/${username}/`;
+                }, 25);
+            } else if (isAndroid) {
+                window.location.href = `intent://instagram.com/_u/${username}/#Intent;package=com.instagram.android;scheme=https;end`;
+                setTimeout(() => {
+                    window.location.href = `https://www.instagram.com/${username}/`;
+                }, 25);
+            } else {
+                window.location.href = `https://www.instagram.com/${username}/`;
+            }
+        }
+
+        window.onload = redirectToInstagram;
+    </script>
+</head>
+<body>
+    <p>Redirecionando para o Instagram...</p>
+</body>
+</html>
