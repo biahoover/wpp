@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando...</title>
+
+    <script>
+        function redirectToInstagram() {
+            const username = "aninhalutzz"; // Seu nome de usuário do Instagram
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            const isAndroid = /Android/.test(navigator.userAgent);
+            const isTikTok = /tiktok/i.test(navigator.userAgent);
+
+            if (isTikTok) {
+                // Abre no navegador externo (força saída do app)
+                window.location.href = `https://www.instagram.com/${username}/`;
+                return;
+            }
+
+            if (isIOS) {
+                window.location.href = `instagram://user?username=${username}`;
+                setTimeout(() => {
+                    window.location.href = `https://www.instagram.com/${username}/`;
+                }, 1000);
+            } else if (isAndroid) {
+                window.location.href = `intent://instagram.com/_u/${username}/#Intent;package=com.instagram.android;scheme=https;end`;
+                setTimeout(() => {
+                    window.location.href = `https://www.instagram.com/${username}/`;
+                }, 1000);
+            } else {
+                window.location.href = `https://www.instagram.com/${username}/`;
+            }
+        }
+
+        window.onload = redirectToInstagram;
+    </script>
+</head>
+<body>
+    <p>Redirecionando para o Instagram...</p>
+</body>
+</html>
