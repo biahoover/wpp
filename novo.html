@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bia Hoover</title>
+    <link rel="icon" href="https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png" type="image/png" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Bia Hoover" />
+    <meta property="og:description" content="Contato Whatsapp" />
+    <meta property="og:image" content="https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png" />
+    <meta property="og:url" content="biahoover.github.io/whatsapp" />
+    <meta property="og:type" content="website" />
+
+    <style>
+        body {
+            background-image: url('https://biahoover.github.io/whatsapp/©2024 Bianca Hoover..png');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            width: 270px;
+            height: auto;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .pulse {
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+
+    <!-- Luxon -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.0/luxon.min.js"></script>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){
+      n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '951503763143037');
+      fbq('track', 'PageView_SiteWhatsapp');
+    </script>
+    <!-- End Facebook Pixel Code -->
+</head>
+<body>
+    <h2><span style="color:white;"><center style="background-color:none; margin-top: 90px;">Bia Hoover</center></span></h2>
+    <span style="color:white;"><center style="background-color:none;">Você finalmente encontrou meu chat secreto 😈 <br> Estou esperando por você 💖 </center></span>
+
+    <!-- Botões -->
+    <button id="privacyButton" class="button" onclick="showPrivacyMessage()">Privacy</button>
+    <button id="telegramButton" class="button" onclick="redirectToTelegram()"></button>
+
+    <script>
+        const buttonSettings = {};
+
+        // Função para gerar um parâmetro de consulta único
+        function generateUniqueQueryParam() {
+            return `?timestamp=${new Date().getTime()}`;
+        }
+
+        // Consulta o arquivo JSON para carregar as configurações dos botões
+        fetch('https://biahoover.github.io/whatsapp/buttonSettings.json' + generateUniqueQueryParam())
+            .then(response => response.json())
+            .then(data => {
+                buttonSettings.telegram = data.telegram;
+
+                // Aplicar as configurações dos botões
+                applyButtonSettings();
+            })
+            .catch(error => console.error('Erro ao carregar as configurações dos botões:', error));
+
+        function determineSource() {
+            const referrer = document.referrer.toLowerCase();
+            const urlParams = new URLSearchParams(window.location.search);
+            const utmSource = urlParams.get('src');
+
+            if (utmSource === 'telegram') return 'telegram';
+            if (referrer.includes('facebook.com')) return 'facebook';
+            if (referrer.includes('instagram.com')) return 'instagram';
+            if (referrer.includes('telegram.org')) return 'telegram';
+
+            return 'other';
+        }
+
+        function applyTelegramSettings() {
+            const now = luxon.DateTime.now().setZone('America/Sao_Paulo');
+            const currentHour = now.hour;
+            const settings = buttonSettings.telegram;
+            const button = document.getElementById('telegramButton');
+            const isVisible = currentHour >= settings.visibilityStart && currentHour < settings.visibilityEnd;
+            const source = determineSource(); // Determine a fonte de acesso do usuário
+
+            if (settings.visibility && isVisible && source !== 'telegram' && source !== 'other') {
+                button.style.display = 'inline-block';
+                button.style.backgroundColor = settings.color;
+                button.style.color = settings.textColor;
+                button.innerHTML = settings.text;
+                if (settings.pulse && currentHour >= settings.pulseStart && currentHour < settings.pulseEnd) {
+                    button.classList.add('pulse');
+                } else {
+                    button.classList.remove('pulse');
+                }
+            } else {
+                button.style.display = 'none';
+            }
+        }
+
+        function redirectToTelegram() {
+            const source = determineSource();
+            const links = {
+                'facebook': 'https://t.me/+cfg0vSLEW-43OGFh',
+                'instagram': 'https://t.me/+tBJMDBB3gURjNTlh',
+                'telegram': 'https://t.me/+SvVHF4344udkOGEx',
+                'other': 'https://t.me/+5Rn8fkMltWUwMTc5'
+            };
+            window.location.href = links[source];
+        }
+
+        function showPrivacyMessage() {
+            alert("Vagas Encerradas. Tente novamente mais tarde");
+        }
+
+        function applyButtonSettings() {
+            applyTelegramSettings();
+        }
+
+        applyButtonSettings();
+    </script>
+</body>
+</html>
